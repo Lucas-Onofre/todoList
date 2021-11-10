@@ -18,13 +18,15 @@
     >
   </div>
   <div class="col-6">
-    <select class="form-select order-select">
-      <option selected>Ordernar por</option>
-      <option value="az">A-Z</option>
-      <option value="za">Z-A</option>
-      <option value="rp">Recentes primeiro</option>
-      <option value="ap">Antigos primeiro</option>
-    </select>
+    <ng-select class="custom"
+               [(ngModel)]="selectedOrder"
+               placeholder="Ordernar por"
+               (change)="ordenar(selectedOrder)"
+               >
+      <ng-option *ngFor="let option of orderBy">
+        {{option.name }}
+      </ng-option>
+    </ng-select>
   </div>
 </div>
 

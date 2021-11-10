@@ -31,7 +31,7 @@
   box-shadow: 5px 5px 3px -1px rgba(0,0,0,0.18);
 }
 
-.order-select{
-  background-color: rgba(218, 218, 218, 0.479);
-  width: 40%;
+.ng-select.custom {
+  margin-left: 5px;
+  width: 30%;
 }

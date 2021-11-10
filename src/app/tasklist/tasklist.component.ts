@@ -1,6 +1,7 @@
 import { Task } from './tasks';
 import { Component, Input, OnInit } from '@angular/core';
 import { TaskService } from './task.service';
+import { NgOption } from '@ng-select/ng-select';
 
 @Component({
   selector: 'app-tasklist',
@@ -8,13 +9,22 @@ import { TaskService } from './task.service';
   styleUrls: ['./tasklist.component.css']
 })
 export class TasklistComponent implements OnInit {
-
   @Input() filtroListaTask: string = '';
+
+  selectedOrder?: NgOption;
+
+  orderBy = [
+    { id: 1, name: 'A-Z'},
+    { id: 2, name: 'Z-A'},
+    { id: 3, name: 'Mais recentes'},
+    { id: 4, name: 'Mais antigos'},
+  ]
 
   public listaDeTasks: any = [];
   public tasksFiltradas: any = [];
   private _filtroLista: string = this.filtroListaTask;
 
+  //filtrando lista de Tasks
   public get filtroLista(){
     return this._filtroLista;
   }
@@ -51,12 +61,36 @@ export class TasklistComponent implements OnInit {
     this.service.delete(id).subscribe(
       () => {
         console.log("Removido com sucesso");
-        this.ngOnInit();
+        this.getTasks();
       },
       error => console.log(error));
   }
 
-  logando(){
-    console.log(this.filtroListaTask);
+
+  //ordenando
+
+  public ordenar(val: any){
+
+    //A-Z
+    if(val.$ngOptionLabel.trim() == 'A-Z'){
+      this.tasksFiltradas = this.tasksFiltradas.sort((x: any, y: any) =>{
+        let a = x.descricao.toUpperCase(),
+            b = y.descricao.toUpperCase();
+        return a == b ? 0 : a > b ? 1 : -1;
+      })
+      return this.tasksFiltradas;
+    }
+
+    //Z-A
+    if(val.$ngOptionLabel.trim() == 'Z-A'){
+      this.tasksFiltradas = this.tasksFiltradas.sort((x: any, y: any) =>{
+        let a = x.descricao.toUpperCase(),
+            b = y.descricao.toUpperCase();
+        return a == b ? 0 : a > b ? -1 : 1;
+      })
+      return this.tasksFiltradas;
+    }
+
+    //mais recentes/mais antigas....
   }
 }
