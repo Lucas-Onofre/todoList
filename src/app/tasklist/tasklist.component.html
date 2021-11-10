@@ -7,8 +7,31 @@
   </div>
 </div> -->
 
-<div class="container">
-  <div *ngFor="let task of listaDeTask"  class="row task-item mb-3">
+<div class="container d-flex justify-content-between mt-5 mb-4">
+  <div class="col-6">
+    <input
+    type="text"
+    class="form-control"
+    id="formGroupExampleInput"
+    placeholder="Pesquise por tasks!"
+    [(ngModel)]="filtroLista"
+    >
+  </div>
+  <div class="col-6">
+    <select class="form-select order-select">
+      <option selected>Ordernar por</option>
+      <option value="az">A-Z</option>
+      <option value="za">Z-A</option>
+      <option value="rp">Recentes primeiro</option>
+      <option value="ap">Antigos primeiro</option>
+    </select>
+  </div>
+</div>
+
+<hr class="mb-4">
+
+<div *ngIf="tasksFiltradas && tasksFiltradas.length; else noTasksFoundMessage" class="container">
+  <div *ngFor="let task of tasksFiltradas"  class="row task-item mb-3">
     <div class="col-2">
       <p>{{task.status}}</p>
     </div>
@@ -16,8 +39,12 @@
       <p>{{task.descricao}}</p>
     </div>
     <div class="col-2">
-        <button type="button" class="btn btn-edit btn-sm col-6">Editar</button>
-        <button type="button" class="btn btn-exclude btn-sm col-6">Excluir</button>
-      </div>
+      <button type="button" class="btn btn-edit btn-sm col-6">Editar</button>
+      <button type="button" (click)="deleteTask(task.id)" class="btn btn-exclude btn-sm col-6">Excluir</button>
     </div>
+  </div>
 </div>
+
+<ng-template #noTasksFoundMessage>
+  <h5 class="text-center">Nenhuma task encontrada!</h5>
+</ng-template>

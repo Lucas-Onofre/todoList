@@ -1,5 +1,5 @@
 import { Task } from './tasks';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { TaskService } from './task.service';
 
 @Component({
@@ -8,7 +8,28 @@ import { TaskService } from './task.service';
   styleUrls: ['./tasklist.component.css']
 })
 export class TasklistComponent implements OnInit {
-  listaDeTask: Task[] = []
+
+  @Input() filtroListaTask: string = '';
+
+  public listaDeTasks: any = [];
+  public tasksFiltradas: any = [];
+  private _filtroLista: string = this.filtroListaTask;
+
+  public get filtroLista(){
+    return this._filtroLista;
+  }
+
+  public set filtroLista(value : string){
+    this._filtroLista = value;
+    this.tasksFiltradas = this.filtroLista ? this.filtrarTasks(this.filtroLista) : this.listaDeTasks;
+  }
+
+  filtrarTasks(filtrarPor: string): any{
+    filtrarPor = filtrarPor.toLowerCase();
+    return this.listaDeTasks.filter(
+      (task: Task) => task.descricao.toLocaleLowerCase().indexOf(filtrarPor) !== -1
+    );
+  }
 
   constructor(private service: TaskService) { }
 
@@ -17,14 +38,25 @@ export class TasklistComponent implements OnInit {
   }
 
   public getTasks(): void{
-    this.service.todasTasks().subscribe(
+    this.service.getAll().subscribe(
       response =>{
-        this.listaDeTask = response
+        this.listaDeTasks = response,
+        this.tasksFiltradas = response
       },
       error => console.log(error)
-    )
-
-    console.log(this.listaDeTask)
+    );
   }
 
+  public deleteTask(id: number): void{
+    this.service.delete(id).subscribe(
+      () => {
+        console.log("Removido com sucesso");
+        this.ngOnInit();
+      },
+      error => console.log(error));
+  }
+
+  logando(){
+    console.log(this.filtroListaTask);
+  }
 }

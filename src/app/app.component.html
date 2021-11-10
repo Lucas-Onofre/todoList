@@ -1,22 +1,4 @@
 <app-navbar></app-navbar>
 
-<div class="container d-flex justify-content-between mt-5 mb-4">
-    <div class="col-6">
-      <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Pesquise por tasks!">
-    </div>
-    <div class="dropdown col-6">
-      <button class="btn dropdown-btn dropdown-toggle ml-2" type="button" id="ordenationDropDown" data-bs-toggle="dropdown" aria-expanded="false">
-        Ordenar por
-      </button>
-      <ul class="dropdown-menu" aria-labelledby="ordenationDropDown">
-        <li><a class="dropdown-item" href="#">A-Z</a></li>
-        <li><a class="dropdown-item" href="#">Z-A</a></li>
-        <li><a class="dropdown-item" href="#">Data</a></li>
-      </ul>
-    </div>
-</div>
-
-<hr class="mb-4">
-
-<app-tasklist></app-tasklist>
+<app-tasklist [filtroListaTask]="filtroLista"></app-tasklist>
 

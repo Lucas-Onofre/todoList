@@ -10,6 +10,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TasklistComponent } from './tasklist/tasklist.component';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -24,6 +25,7 @@ import { TasklistComponent } from './tasklist/tasklist.component';
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    FormsModule,
     BsDropdownModule.forRoot()
   ],
   providers: [],
