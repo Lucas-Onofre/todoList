@@ -1,0 +1,23 @@
+<!-- <div *ngFor="let task of listaDeTask">
+  <h2>{{task.descricao}}</h2>
+  <span>{{task.stat}}</span>
+  <div>
+    <button>Teste</button>
+    <button>Teste</button>
+  </div>
+</div> -->
+
+<div class="container">
+  <div *ngFor="let task of listaDeTask"  class="row task-item mb-3">
+    <div class="col-2">
+      <p>{{task.status}}</p>
+    </div>
+    <div class="col-8">
+      <p>{{task.descricao}}</p>
+    </div>
+    <div class="col-2">
+        <button type="button" class="btn btn-edit btn-sm col-6">Editar</button>
+        <button type="button" class="btn btn-exclude btn-sm col-6">Excluir</button>
+      </div>
+    </div>
+</div>
