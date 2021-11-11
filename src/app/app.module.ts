@@ -11,13 +11,15 @@ import { NavbarComponent } from './navbar/navbar.component';
 
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TasklistComponent } from './tasklist/tasklist.component';
+import { ModalComponent } from './modal/modal.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
-    TasklistComponent
+    TasklistComponent,
+    ModalComponent
   ],
   imports: [
     BrowserModule,

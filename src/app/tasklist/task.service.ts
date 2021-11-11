@@ -22,8 +22,8 @@ export class TaskService {
     return this.httpClient.post<Task>(API, task);
   }
 
-  public put(task: Task): Observable<Task>{
-    return this.httpClient.put<Task>(`${API}/${task.id}`, task);
+  public put(task: any): Observable<any>{
+    return this.httpClient.put<any>(`${API}/${task.id}`, task);
   }
 
   public delete(id: number): Observable<any>{

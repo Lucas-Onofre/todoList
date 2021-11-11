@@ -24,6 +24,9 @@ export class TasklistComponent implements OnInit {
   public tasksFiltradas: any = [];
   private _filtroLista: string = this.filtroListaTask;
 
+  //modal-edit-variables
+  descricaoEdit = '';
+
   //filtrando lista de Tasks
   public get filtroLista(){
     return this._filtroLista;
@@ -35,9 +38,9 @@ export class TasklistComponent implements OnInit {
   }
 
   filtrarTasks(filtrarPor: string): any{
-    filtrarPor = filtrarPor.toLowerCase();
+    filtrarPor = filtrarPor.toLowerCase().trim();
     return this.listaDeTasks.filter(
-      (task: Task) => task.descricao.toLocaleLowerCase().indexOf(filtrarPor) !== -1
+      (task: Task) => task.descricao.toLocaleLowerCase().trim().indexOf(filtrarPor) !== -1
     );
   }
 
@@ -46,6 +49,8 @@ export class TasklistComponent implements OnInit {
   ngOnInit(){
     this.getTasks();
   }
+
+  //GET, DELETE, UPDATE
 
   public getTasks(): void{
     this.service.getAll().subscribe(
@@ -66,31 +71,45 @@ export class TasklistComponent implements OnInit {
       error => console.log(error));
   }
 
+  editableTaskId: number = 0;
+
+  public getTaskId(id: number){
+    this.editableTaskId = id;
+    console.log(this.editableTaskId);
+  }
+
+  public submitModal(){
+    const myTask = {id: this.editableTaskId, descricao: this.descricaoEdit, status: false}
+    this.service.put(myTask).subscribe(() => {
+      window.location.reload();
+    })
+  }
 
   //ordenando
 
-  public ordenar(val: any){
+  public ordenar(val?: NgOption){
 
-    //A-Z
-    if(val.$ngOptionLabel.trim() == 'A-Z'){
-      this.tasksFiltradas = this.tasksFiltradas.sort((x: any, y: any) =>{
-        let a = x.descricao.toUpperCase(),
-            b = y.descricao.toUpperCase();
-        return a == b ? 0 : a > b ? 1 : -1;
-      })
-      return this.tasksFiltradas;
+    if(val?.$ngOptionLabel){
+      //A-Z
+      if(val.$ngOptionLabel.trim() == 'A-Z'){
+        this.tasksFiltradas = this.tasksFiltradas.sort((x: Task, y: Task) =>{
+          let a = x.descricao.toUpperCase(),
+              b = y.descricao.toUpperCase();
+          return a == b ? 0 : a > b ? 1 : -1;
+        })
+        return this.tasksFiltradas;
+      }
+
+      //Z-A
+      if(val.$ngOptionLabel.trim() == 'Z-A'){
+        this.tasksFiltradas = this.tasksFiltradas.sort((x: Task, y: Task) =>{
+          let a = x.descricao.toUpperCase(),
+              b = y.descricao.toUpperCase();
+          return a == b ? 0 : a > b ? -1 : 1;
+        })
+        return this.tasksFiltradas;
+      }
     }
-
-    //Z-A
-    if(val.$ngOptionLabel.trim() == 'Z-A'){
-      this.tasksFiltradas = this.tasksFiltradas.sort((x: any, y: any) =>{
-        let a = x.descricao.toUpperCase(),
-            b = y.descricao.toUpperCase();
-        return a == b ? 0 : a > b ? -1 : 1;
-      })
-      return this.tasksFiltradas;
-    }
-
-    //mais recentes/mais antigas....
+    return this.tasksFiltradas;
   }
 }

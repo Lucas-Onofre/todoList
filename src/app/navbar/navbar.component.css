@@ -21,3 +21,23 @@
 .btn-outline-success:hover{
   filter: brightness(0.9);
 }
+
+.modal-confirm-btn{
+  background-color: rgb(49, 196, 49);
+
+  transition: filter 0.2s;
+}
+
+.modal-confirm-btn:hover{
+  filter: brightness(0.9);
+}
+
+.modal-close-btn{
+  background-color: #CCD3D9;
+
+  transition: filter 0.2s;
+}
+
+.modal-close-btn:hover{
+  filter: brightness(0.9);
+}

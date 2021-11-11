@@ -41,7 +41,7 @@
       <p>{{task.descricao}}</p>
     </div>
     <div class="col-2">
-      <button type="button" class="btn btn-edit btn-sm col-6">Editar</button>
+      <button type="button" (click)="getTaskId(task.id)" class="btn btn-edit btn-sm col-6" data-bs-toggle="modal" data-bs-target="#editModal">Editar</button>
       <button type="button" (click)="deleteTask(task.id)" class="btn btn-exclude btn-sm col-6">Excluir</button>
     </div>
   </div>
@@ -50,3 +50,32 @@
 <ng-template #noTasksFoundMessage>
   <h5 class="text-center">Nenhuma task encontrada!</h5>
 </ng-template>
+
+<!-- Modal -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-fullscreen-sm-down">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="editModalLabel">Editar tarefa</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form class="form mt-4" (ngSubmit)="submitModal()" #editarForm="ngForm">
+          <div class="input-group">
+            <span class="input-group-text input-group-text__override">Descrição</span>
+            <textarea class="form-control" aria-label="With textarea"
+            [(ngModel)]="descricaoEdit"
+            name="descricaoEdit"
+            #campoDescricao = "ngModel"
+            required
+            ></textarea>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn modal-close-btn" data-bs-dismiss="modal">Close</button>
+            <button [disabled]="editarForm.invalid" type="submit" class="btn modal-confirm-btn">Editar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
